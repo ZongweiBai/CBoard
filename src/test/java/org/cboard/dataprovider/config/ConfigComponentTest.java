@@ -1,12 +1,9 @@
 package org.cboard.dataprovider.config;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by zyong on 2017/4/24.
  */
 public class ConfigComponentTest {
-
 
     public void testDrider() {
         ConfigComponent cc1 = new CompositeConfig();

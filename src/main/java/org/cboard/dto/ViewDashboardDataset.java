@@ -5,7 +5,7 @@ import com.google.common.base.Function;
 import org.cboard.pojo.DashboardDataset;
 import org.cboard.services.role.RolePermission;
 
-import javax.annotation.Nullable;
+import org.springframework.lang.Nullable;
 import java.sql.Timestamp;
 import java.util.Map;
 

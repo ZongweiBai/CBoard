@@ -5,7 +5,7 @@ import org.cboard.pojo.DashboardWidget;
 import com.google.common.base.Function;
 import org.cboard.services.role.RolePermission;
 
-import javax.annotation.Nullable;
+import org.springframework.lang.Nullable;
 import java.util.Map;
 
 /**

@@ -3,7 +3,6 @@ package org.cboard.services;
 import com.alibaba.fastjson.JSONObject;
 import org.cboard.dao.BoardDao;
 import org.cboard.exception.CBoardException;
-import org.cboard.pojo.DashboardBoard;
 import org.cboard.security.service.LocalSecurityFilter;
 import org.cboard.services.persist.PersistContext;
 import org.slf4j.Logger;
@@ -32,7 +31,7 @@ public class PersistService {
     private String phantomjsPath;
     @Autowired
     private BoardDao boardDao;
-    private String scriptPath = new File(this.getClass().getResource("/phantom.js").getFile()).getPath();
+    private String scriptPath = new File(this.getClass().getResource("/static/phantom.js").getFile()).getPath();
 
     private static final ConcurrentMap<String, PersistContext> TASK_MAP = new ConcurrentHashMap<>();
 

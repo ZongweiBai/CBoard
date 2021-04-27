@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,7 +30,7 @@ public class CleanerService implements InitializingBean {
 
     @Autowired
     @Qualifier("h2DataSource")
-    private BasicDataSource jdbcDataSource;
+    private DataSource jdbcDataSource;
 
     @Value("${aggregator.h2.database.name}")
     private String h2DbName;

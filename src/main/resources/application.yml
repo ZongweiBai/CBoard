@@ -1,0 +1,104 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /cboard
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: cboard
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    check-template-location: true
+    suffix: .html
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    mode: HTML
+  mvc:
+    static-path-pattern: /static/**
+  datasource:
+    primary:
+      type: com.alibaba.druid.pool.DruidDataSource
+      jdbc-url: jdbc:mysql://192.168.3.168:3306/cboard?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    h2:
+      type: com.alibaba.druid.pool.DruidDataSource
+      jdbc-url: jdbc:h2:~/H2Data/cboard;AUTO_SERVER=TRUE;LOG=0;UNDO_LOG=0
+      username: sa
+      password: ""
+      driver-class-name: org.h2.Driver
+    druid:
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.gif,*.png,*.jpg,*.html,*.js,*.css,*.ico,/druid/*"
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: true
+        login-username: admin
+        login-password: root123
+        allow:
+        deny:
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+#    password: redis#2019
+    database: 1
+    timeout: 2000ms
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+# 开放spring actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    shutdown:
+      enabled: false
+    prometheus:
+      enabled: true
+  health:
+    redis:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+        step: 1ms
+        descriptions: true
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    variables:
+      admin_user_id: 1
+
+admin_user_id: 1
+dataprovider:
+  resultLimit: 1000000
+phantomjs_path: D:/phantomjs-2.1.1-windows/bin/phantomjs.exe
+mail:
+  smtp:
+    host: 127.0.0.1
+    port: 8825
+    from: test@test.com
+aggregator:
+  h2:
+    cleanjob:
+      quarz: 0 1 0 * * ?
+    database:
+      name: cboard

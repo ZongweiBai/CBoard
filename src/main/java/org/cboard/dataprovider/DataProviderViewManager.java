@@ -7,6 +7,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.cboard.dataprovider.annotation.DatasourceParameter;
 import org.cboard.dataprovider.annotation.QueryParameter;
 import org.reflections.ReflectionUtils;
@@ -30,16 +31,11 @@ public class DataProviderViewManager {
 
     static {
         Properties props = new Properties();
-        String fileDir = DataProviderViewManager.class.getResource("/template/config").getPath();
-        try {
-            fileDir = URLDecoder.decode(fileDir, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            LOG.error("", e);
-        }
         props.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, "org.apache.velocity.runtime.log.Log4JLogChute");
-        props.setProperty(velocityEngine.FILE_RESOURCE_LOADER_PATH, fileDir);
+        props.setProperty("class.resource.loader.class", ClasspathResourceLoader.class.getName());
         props.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
         props.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
+        props.setProperty(Velocity.RESOURCE_LOADER, "class");
         props.setProperty("runtime.log.logsystem.log4j.logger", "velocity");
         props.setProperty("log4j.logger.org.apache.velocity", "ERROR");
         velocityEngine = new VelocityEngine(props);
@@ -112,7 +108,7 @@ public class DataProviderViewManager {
             VelocityContext context = new VelocityContext();
             context.put("params", params);
             StringBuilderWriter stringBuilderWriter = new StringBuilderWriter();
-            velocityEngine.mergeTemplate("query.vm", "utf-8", context, stringBuilderWriter);
+            velocityEngine.mergeTemplate("templates/config/query.vm", "utf-8", context, stringBuilderWriter);
             return stringBuilderWriter.toString();
         }
         return null;
@@ -152,7 +148,7 @@ public class DataProviderViewManager {
             VelocityContext context = new VelocityContext();
             context.put("params", params);
             StringBuilderWriter stringBuilderWriter = new StringBuilderWriter();
-            velocityEngine.mergeTemplate("datasource.vm", "utf-8", context, stringBuilderWriter);
+            velocityEngine.mergeTemplate("templates/config/datasource.vm", "utf-8", context, stringBuilderWriter);
             return stringBuilderWriter.toString();
         }
         return null;

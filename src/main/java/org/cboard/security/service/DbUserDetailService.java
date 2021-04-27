@@ -16,8 +16,10 @@ import java.util.List;
  */
 public class DbUserDetailService extends JdbcDaoImpl {
 
+    @Override
     protected List<UserDetails> loadUsersByUsername(final String username) {
         return this.getJdbcTemplate().query(super.getUsersByUsernameQuery(), new String[]{username}, new RowMapper() {
+            @Override
             public UserDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
                 String userId = rs.getString(1);
                 String username = rs.getString(2);
@@ -32,6 +34,7 @@ public class DbUserDetailService extends JdbcDaoImpl {
         });
     }
 
+    @Override
     protected UserDetails createUserDetails(String username, UserDetails userFromUserQuery, List<GrantedAuthority> combinedAuthorities) {
         return userFromUserQuery;
     }
