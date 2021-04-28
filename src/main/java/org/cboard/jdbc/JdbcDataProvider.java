@@ -1,11 +1,11 @@
 package org.cboard.jdbc;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Charsets;
 import com.google.common.base.Stopwatch;
 import com.google.common.hash.Hashing;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 import org.cboard.cache.CacheManager;
@@ -195,18 +195,17 @@ public class JdbcDataProvider extends DataProvider implements Aggregatable, Init
                 synchronized (key.intern()) {
                     ds = datasourceMap.get(key);
                     if (ds == null) {
-                        Map<String, String> conf = new HashedMap();
-                        conf.put(DruidDataSourceFactory.PROP_DRIVERCLASSNAME, dataSource.get(DRIVER));
-                        conf.put(DruidDataSourceFactory.PROP_URL, dataSource.get(JDBC_URL));
-                        conf.put(DruidDataSourceFactory.PROP_USERNAME, dataSource.get(USERNAME));
+                        HikariConfig configuration = new HikariConfig();
+                        configuration.setDriverClassName(dataSource.get(DRIVER));
+                        configuration.setJdbcUrl(dataSource.get(JDBC_URL));
+                        configuration.setUsername(dataSource.get(USERNAME));
                         if (StringUtils.isNotBlank(password)) {
-                            conf.put(DruidDataSourceFactory.PROP_PASSWORD, dataSource.get(PASSWORD));
+                            configuration.setPassword(password);
                         }
-                        conf.put(DruidDataSourceFactory.PROP_INITIALSIZE, "3");
-                        DruidDataSource druidDS = (DruidDataSource) DruidDataSourceFactory.createDataSource(conf);
-                        druidDS.setBreakAfterAcquireFailure(true);
-                        druidDS.setConnectionErrorRetryAttempts(5);
-                        datasourceMap.put(key, druidDS);
+                        configuration.setMinimumIdle(3);
+                        HikariDataSource dataSource = new HikariDataSource(configuration);
+                        datasourceMap.put(key, dataSource);
+
                         ds = datasourceMap.get(key);
                     }
                 }

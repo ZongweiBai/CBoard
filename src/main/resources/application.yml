@@ -21,30 +21,17 @@ spring:
     static-path-pattern: /static/**
   datasource:
     primary:
-      type: com.alibaba.druid.pool.DruidDataSource
+      type: com.zaxxer.hikari.HikariDataSource
       jdbc-url: jdbc:mysql://192.168.3.168:3306/cboard?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
     h2:
-      type: com.alibaba.druid.pool.DruidDataSource
+      type: com.zaxxer.hikari.HikariDataSource
       jdbc-url: jdbc:h2:~/H2Data/cboard;AUTO_SERVER=TRUE;LOG=0;UNDO_LOG=0
       username: sa
       password: ""
       driver-class-name: org.h2.Driver
-    druid:
-      web-stat-filter:
-        enabled: true
-        url-pattern: /*
-        exclusions: "*.gif,*.png,*.jpg,*.html,*.js,*.css,*.ico,/druid/*"
-      stat-view-servlet:
-        enabled: true
-        url-pattern: /druid/*
-        reset-enable: true
-        login-username: admin
-        login-password: root123
-        allow:
-        deny:
 
   redis:
     host: 127.0.0.1
