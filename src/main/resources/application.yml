@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 10001
   servlet:
     context-path: /cboard
 
@@ -78,11 +78,13 @@ admin_user_id: 1
 dataprovider:
   resultLimit: 1000000
 phantomjs_path: D:/phantomjs-2.1.1-windows/bin/phantomjs.exe
+
 mail:
   smtp:
     host: 127.0.0.1
     port: 8825
     from: test@test.com
+
 aggregator:
   h2:
     cleanjob:

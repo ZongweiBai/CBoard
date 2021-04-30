@@ -5,12 +5,14 @@
 
 # User-specific stuff:
 .idea/*
+.gradle/*
 target
 .DS_Store
 **/*.iml
 
 ## File-based project format:
 *.iws
+*.ipr
 
 ## Plugin-specific files:
 

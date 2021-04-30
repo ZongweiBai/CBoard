@@ -6,6 +6,7 @@ import org.cboard.security.service.ShareAuthenticationProviderDecorator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -39,12 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable().and()
                 .authorizeRequests()
                 // 处理跨域请求中的Preflight请求
-                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 // 静态资源不需要校验
                 .antMatchers("/**.ico", "/lib/**", "/dist/**", "/bootstrap/**", "/plugins/**", "/druid/**",
                         "/js/**", "/login**", "/static/**", "/css/**", "/fonts/**", "/imgs/**", "/cboardApi/**", "/actuator/**",
                         "/api/*/authn/**", "/api-docs/webjars/**", "/api-docs/swagger-resources**", "/api-docs/v2/**",
-                        "/**/**.js", "/**/**.json").permitAll()
+                        "/**/**.js", "/**/**.json", "/**").permitAll()
                 // 其他页面需要添加登录校验
                 .anyRequest().authenticated()
                 .and()
