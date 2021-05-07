@@ -1,5 +1,5 @@
 server:
-  port: 10001
+  port: 20001
   servlet:
     context-path: /cboard
 
@@ -22,7 +22,7 @@ spring:
   datasource:
     primary:
       type: com.zaxxer.hikari.HikariDataSource
-      jdbc-url: jdbc:mysql://192.168.3.168:3306/cboard?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+      jdbc-url: jdbc:mysql://cloud.server:3306/cboard?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -34,9 +34,9 @@ spring:
       driver-class-name: org.h2.Driver
 
   redis:
-    host: 127.0.0.1
+    host: cloud.server
     port: 6379
-#    password: redis#2019
+    password: root
     database: 1
     timeout: 2000ms
   web:
